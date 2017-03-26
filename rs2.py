@@ -29,13 +29,14 @@ import os
 import datetime
 import sys
 
+VERSION = '1.2'
 USRHOME = os.getenv("HOME")
 OVERWRITE = False
 
-bashR2 = []
+bashR2 = []  # Set as global cuz needed during uninstallation
 bashR2.append("# RS2\n")
 bashR2.append("if [ -f \"$HOME/.rs2\" ]; then\n")
-bashR2.append("    . \"$HOME/.rs2\"\n")
+bashR2.append("    . \"$HOME/.rs2\"\n")  # Basically calls rs2 script in terminal
 bashR2.append("fi\n")
 
 
@@ -43,7 +44,7 @@ bashR2.append("fi\n")
 
 class kcs():
 	"""
-		K4T Color Standard
+		OLD K4T Color Standard (Now Avalon Color Framework)
 		Defines color and standardizes output
 	"""
 
@@ -116,7 +117,7 @@ def writeRS2():
 		Writes RS2 Script to $Home/.rs2
 	"""
 	global OVERWRITE
-	rs2 = []
+	rs2 = []  # Why not just include the entire file in code?
 	rs2.append("#RS2 Terminal Timestamp by K4YT3X\n")
 	rs2.append("#Modified from original script by Terrance@askubuntu.com\n")
 	rs2.append("\n")
@@ -124,6 +125,7 @@ def writeRS2():
 	rs2.append("# (this is recalculated every time the prompt is shown in function prompt_command):\n")
 	rs2.append("fill=\"--- \"\n")
 	rs2.append("\n")
+	rs2.append("timestamp=\"true\"\n")
 	rs2.append("reset_style=\'\\[\\033[00m\\]\'\n")
 	rs2.append("status_style=$reset_style\'\\[\\033[0;90m\\]\' # gray color; use 0;37m for lighter color\n")
 	rs2.append("command_style=$reset_style\'\\[\\033[1;29m\\]\' # bold black\n")
@@ -142,8 +144,12 @@ def writeRS2():
 	rs2.append("fi\n")
 	rs2.append("\n")
 	rs2.append("# Prompt variable:\n")
-	rs2.append("\n")
-	rs2.append("PS1=\"$status_style\"\'$fill $(date +\"%m/%d/%y \")\\t\\n\'\'${debian_chroot:+($debian_chroot)}\'$user_color\'\\u\\[\\033[37m\\]@\\h\\[\\033[00m\\]:\'$dir_color\'\\w\\[\\033[00m\\]\\$ \'\n")
+	rs2.append("if [ \"$timestamp\" = \"true\" ]\n")
+	rs2.append("then\n")
+	rs2.append("    PS1=\"$status_style\"\'$fill $(date +\"%m/%d/%y \")\\t\\n\'\'${debian_chroot:+($debian_chroot)}\'$user_color\'\\u\\[\\033[00m\\]\\$\\[\\033[90m\\]\\h\'$dir_color\'\'[\'\\w\']\'\\[\\033[00m\\]> \'\n")
+	rs2.append("else\n")
+	rs2.append("    PS1=\'${debian_chroot:+($debian_chroot)}\'$user_color\'\\u\\[\\033[00m\\]\\$\\[\\033[90m\\]\\h\'$dir_color\'\'[\'\\w\']\'\\[\\033[00m\\]> \'\n")
+	rs2.append("fi\n")
 	rs2.append("\n")
 	rs2.append("# Reset color for command output\n")
 	rs2.append("# (this one is invoked every time before a command is executed):\n")
@@ -250,7 +256,7 @@ def printHelp():
 		print(W + '[' + R + 'x' + W + ']' + W + BD + ' RS2 Status: ' + R + BD + 'Not Installed' + W)
 	print(BD + '\nUsage: 	python3 ' + __file__ + ' [install] [uninstall]' + W)
 	if __file__ != 'rs2.py' and __file__.split('/')[-1] != 'rs2.py':
-		print(OR + 'Why did you change the file name???')
+		print(OR + 'Why did you change the file name???')  # Just for fun
 	print()
 	print(Y + BD + 'install' + W + ': install RS2 for current user')
 	print(R + BD + 'uninstall' + W + ': remove installed RS2')
@@ -259,7 +265,7 @@ def printHelp():
 
 # ------------------------------ Begin Procedural
 
-printIcon()
+printIcon()  # Print the icon anyway
 
 try:
 	if sys.argv[1] == 'uninstall':
