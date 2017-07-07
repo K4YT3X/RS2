@@ -29,7 +29,7 @@ import os
 import datetime
 import sys
 
-VERSION = '1.2'
+VERSION = '1.3'
 USRHOME = os.getenv("HOME")
 OVERWRITE = False
 
@@ -125,7 +125,7 @@ def writeRS2():
 	rs2.append("# (this is recalculated every time the prompt is shown in function prompt_command):\n")
 	rs2.append("fill=\"--- \"\n")
 	rs2.append("\n")
-	rs2.append("timestamp=\"true\"\n")
+	rs2.append("timestamp=\"false\"\n")
 	rs2.append("reset_style=\'\\[\\033[00m\\]\'\n")
 	rs2.append("status_style=$reset_style\'\\[\\033[0;90m\\]\' # gray color; use 0;37m for lighter color\n")
 	rs2.append("command_style=$reset_style\'\\[\\033[1;29m\\]\' # bold black\n")
@@ -148,7 +148,7 @@ def writeRS2():
 	rs2.append("then\n")
 	rs2.append("    PS1=\"$status_style\"\'$fill $(date +\"%m/%d/%y \")\\t\\n\'\'${debian_chroot:+($debian_chroot)}\'$user_color\'\\u\\[\\033[00m\\]\\$\\[\\033[90m\\]\\h\'$dir_color\'\'[\'\\w\']\'\\[\\033[00m\\]> \'\n")
 	rs2.append("else\n")
-	rs2.append("    PS1=\'${debian_chroot:+($debian_chroot)}\'$user_color\'\\u\\[\\033[00m\\]\\$\\[\\033[90m\\]\\h\'$dir_color\'\'[\'\\w\']\'\\[\\033[00m\\]> \'\n")
+	rs2.append("    PS1=\'${debian_chroot:+($debian_chroot)}\\[\\033[0;90m\\][\\t] \'$user_color\'\\u\\[\\033[00m\\]\\$\\[\\033[90m\\]\\h\'$dir_color\'\'[\'\\w\']\'\\[\\033[00m\\]> \'\n")
 	rs2.append("fi\n")
 	rs2.append("\n")
 	rs2.append("# Reset color for command output\n")
